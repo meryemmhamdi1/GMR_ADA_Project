@@ -36,5 +36,5 @@ One of the limitations that we are currently thinking of is the possibility that
 | 23/01 - 29/01 | Final Preparation of the report and the symposium |  | Mini-Symposium (Group Poster/ Report)  End of January (TBD)
  
                       
-
-
+### Note
+This is a tentative plan, the Deliverables and the Timeplan might change a little bit as we start working on the project and exploring the data. We will adjust this proposal if we decide to make some changes.
