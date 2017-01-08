@@ -45,4 +45,4 @@ def apply_syntactic_rules(docs,new_samples):
             if word.dep == advmod:
                 new_samples[i] = [x for x in new_samples[i] if x != (unicode(word),word.pos_)]
         triple_dependencies.append(triple_dependencies_sub)
-        return new_samples
+    return new_samples,triple_dependencies
