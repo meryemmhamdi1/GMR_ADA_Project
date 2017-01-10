@@ -1,7 +1,7 @@
 # Implementation of Word level emotionalities
 from __future__ import division
 import sys
-sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis")
+#sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis")
 import numpy as np
 from nltk.collocations import *
 from gensim.models import word2vec

@@ -10,7 +10,7 @@ import math
 
 ###### STEP 1: Loading Data:
 # HERE YOU CAN CHANGE THE NAME OF THE FILE FROM WHICH TO LOAD THE DATA
-tweets = pd.read_csv("../Data/en_sample.csv", encoding ="utf-8")
+tweets = pd.read_csv("/Users/Ray/Desktop/ADA/twitter/languages_CSVs/en.csv",nrows=500000, encoding ="utf-8")
 
 ###### STEP 2: Replacing Special Categories:
 print "SOME CLEANING >>>>>"
@@ -87,19 +87,16 @@ tweet_without_ne = remove_named_entities(new_samples)
 
 
 ###### STEP 11: Normalizing POS tag:
-normalized_tags = normalize_pos_tags_words(tweet_without_ne)
+normalized_tags = normalize_pos_tags_words1(tweet_without_ne)
 
 ###### STEP 12: Removal of Punctuation and Stop words and Converting to Lower Case and Removal of Other special categories: url, number, username:
 tagged_tweets_without = eliminate_stop_words_punct(normalized_tags)
 
 ###### STEP 13: Lemmatization:
 lemmatized_tweets = lemmatizer(tagged_tweets_without)
-
 lemmatized_tweets_untag = lemmatizer_untagged(tagged_tweets_without)
-
 ###### STEP 14: Keeping only NAVA words:
 nava_tweets = keep_only_nava_words(lemmatized_tweets)
-
 print "Storing in DataFrame"
 ###### STEP 16: Storing Tokenized Lemmatized + Affective Representation + Emotion for each tweet
 tweets_df = pd.DataFrame()
@@ -108,4 +105,4 @@ tweets_df['Tokenized Lemmatized'] = tokenized_lemma
 
 tweets_df['Nava Representation'] = nava_tweets
 
-tweets_df.to_csv('../Results/Test/Unannotated_Representation.csv')
+tweets_df.to_csv('Results/Test/Unannotated_Representation.csv')

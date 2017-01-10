@@ -1,6 +1,6 @@
 import pandas as pd
 import sys
-sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis") 
+#sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis") 
 from DataSchemaExtractionParsing import *
 from DataPreProcessing import *
 from SentSemanticModule import *
@@ -13,7 +13,7 @@ import ast
 
 ## TO BE REPLACED:
 
-tweets_df = pd.read_csv('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/Results/Test/Unannotated_Representation.csv')
+tweets_df = pd.read_csv('../Results/Test/Unannotated_Representation.csv')
 
 nava_repr = tweets_df['Nava Representation']
 
@@ -26,7 +26,7 @@ for i in range(0, len(nava_repr)):
 
 ###### STEP 2: Loading Lexicon:
 ## TO BE REPLACED:
-lexicon_df = pd.read_csv('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/NRCLexicon/lexicon_nrc.csv', encoding='utf-8')
+lexicon_df = pd.read_csv('../NRCLexicon/lexicon_nrc.csv', encoding='utf-8')
 unique_lexicon = make_unique_lexicon(lexicon_df)
 
 ###### STEP 3: Word Level
@@ -79,5 +79,5 @@ lexicon_results_df['Emotion'] = emotions
 
 lexicon_results_df['Sentiment'] = senti
 
-lexicon_results_df.to_csv('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/Results/Test/Tweets_Labelled_Lexicon.csv')
+lexicon_results_df.to_csv('../Results/Test/Tweets_Labelled_Lexicon.csv')
 

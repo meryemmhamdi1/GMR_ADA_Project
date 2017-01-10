@@ -38,7 +38,7 @@ def handle_special_categories(sample_tweets):
     return sample_tweets
 
 def replace_contractions(sample_tweets):
-    f = io.open('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis/contractions.txt', 'r',
+    f = io.open('contractions.txt', 'r',
                 encoding='utf8')
     text = f.read()
     contractions = eval(text)

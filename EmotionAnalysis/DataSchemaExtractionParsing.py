@@ -21,7 +21,7 @@ def extract_tweets(location):
 
 def extractLexicon():
     lexicon = pd.read_csv(
-        '/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/NRCLexicon/NRC-Emotion-Lexicon-v0.92/NRC-emotion-lexicon.txt',
+        '../NRCLexicon/NRC-Emotion-Lexicon-v0.92/NRC-emotion-lexicon.txt',
         engine='python', names=['col'])
     lexicon['Word'] = lexicon['col'].str.split().apply(lambda x: x[0])
     lexicon['EmotionCategory'] = lexicon['col'].str.split().apply(lambda x: x[1])

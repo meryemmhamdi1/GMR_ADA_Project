@@ -1,6 +1,6 @@
 import pandas as pd
 import sys
-sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis") 
+#sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis") 
 from DataSchemaExtractionParsing import *
 from DataPreProcessing import *
 from SentSemanticModule import *
@@ -11,7 +11,7 @@ import ast
 ##### STEP 1: Loading Data with tokenized and affective representation:
 # HERE YOU CAN CHANGE THE NAME OF THE FILE FROM WHICH TO LOAD THE DATA
 
-tweets_df = pd.read_csv('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/Results/Test/Unannotated_Representation.csv')
+tweets_df = pd.read_csv('../Results/Test/Unannotated_Representation.csv')
 
 tokenized_lemma = tweets_df['Tokenized Lemmatized']
 
@@ -30,12 +30,12 @@ for i in range(0, len(nava_repr)):
     nava_tweets.append(result)
 
 ###### STEP 2: Loading Lexicon:
-lexicon_df = pd.read_csv('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/NRCLexicon/lexicon_nrc.csv',encoding='utf-8')
+lexicon_df = pd.read_csv('../NRCLexicon/lexicon_nrc.csv',encoding='utf-8')
 unique_lexicon = make_unique_lexicon(lexicon_df)
 
 ###### STEP 3: Loading Word2Vec Model:
 
-model = Word2Vec.load('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/Models/geo_tweets_word2vec_model')
+model = Word2Vec.load('../Models/geo_tweets_word2vec_model')
 
 ###### STEP 4: Word Level
 
@@ -88,5 +88,5 @@ word2vec_results_df['Emotion'] = emotions
 
 word2vec_results_df['Sentiment'] = senti
 
-word2vec_results_df.to_csv('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/Results/Test/Tweets_Labelled_Word2Vec.csv')
+word2vec_results_df.to_csv('../Results/Test/Tweets_Labelled_Word2Vec.csv')
 
