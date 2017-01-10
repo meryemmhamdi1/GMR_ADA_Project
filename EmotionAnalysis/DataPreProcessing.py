@@ -91,9 +91,9 @@ def normalize_pos_tags_words(tagged_tweets):
     for i in range(0, len(tagged_tweets)):
         for (word, tag) in tagged_tweets[i]:
             if tag == 'NN' or tag == 'NNP' or tag == 'NNPS' or tag == 'NNS':
-                tweets_nava_sub.append((word, 'N'))
+                tweets_nava_sub.append((word, 'n'))
             elif tag == 'VB' or tag == 'VBD' or tag == 'VBG' or tag == 'VBN' or tag == 'VBP' or tag == 'VBZ':
-                tweets_nava_sub.append((word, 'V'))
+                tweets_nava_sub.append((word, 'v'))
             elif tag == 'JJ' or tag == 'JJR' or tag == 'JJS':
                 tweets_nava_sub.append((word, 'Adj'))
             elif tag == 'RB' or tag == 'RBR' or tag == 'RBS':
@@ -104,7 +104,7 @@ def normalize_pos_tags_words(tagged_tweets):
         tweets_nava_sub = []
     return tweets_nava
 
-def normalize_pos_tags_words(tagged_tweets):
+def normalize_pos_tags_words1(tagged_tweets):
     """
     :param tagged_tweets:
     :return: tweets_nava
@@ -201,9 +201,9 @@ def lemmatizer_raw(tweets):
         tweets_sub = []
         for (word,tag) in tweets[i]:
             if tag=='v' or tag =='n':
-                tweets_sub.append(lmtzr.lemmatize(word,tag).lower())
+                tweets_sub.append(unicode(lmtzr.lemmatize(word,tag)).lower())
             else: 
-                tweets_sub.append(word.lower())
+                tweets_sub.append(unicode(word.lower()))
         tweets_whole.append(tweets_sub)
     return tweets_whole
 
@@ -219,11 +219,13 @@ def eliminate_stop_words_punct(tagged_tweets):
     :return: tagged_tweets_without
     """
     stop_words = list(set(stopwords.words('english')))
+    non_emotinal_verbs = ['go','be','do','have','get']
+    customized_stop_words = stop_words + non_emotinal_verbs
     tagged_tweets_without = []
     for i in range(0, len(tagged_tweets)):
         tagged_tweets_without_sub = []
         for (word, tag) in tagged_tweets[i]:
-            if word not in stop_words and word not in ['url','number','username'] and len(word) >= 2:
+            if word not in customized_stop_words and word not in ['url','number','username'] and len(word) >= 2:
                 tagged_tweets_without_sub.append((word.lower(), tag))
         tagged_tweets_without.append(tagged_tweets_without_sub)
     return tagged_tweets_without
@@ -235,34 +237,31 @@ def make_unique(duplicate_list):
     :return:
     """
     unique_words = list(set(duplicate_list))
-    #save_list(unique_words, "MediumData/unique_words.txt")
     return unique_words
 
-def make_unique_lexicon(galc_lexicon):
+def make_unique_lexicon(nrc_lexicon):
     """
 
-    :param galc_lexicon:
+    :param nrc_lexicon:
     :return: unique_lexicon
     """
     lexicon_flatten = []
-    emotions = galc_lexicon.columns.values
+    emotions = nrc_lexicon.columns.values
     for i in range(0, len(emotions)):
-        for representative_word in galc_lexicon[emotions[i]].dropna():
+        for representative_word in nrc_lexicon[emotions[i]].dropna():
             lexicon_flatten.append(representative_word)
     unique_lexicon = make_unique(lexicon_flatten)
-    #save_list(unique_lexicon, "MediumData/unique_lexicon.txt")
     return unique_lexicon
 
-def list_galc_lexicon(galc_lexicon):
+def list_nrc_lexicon(nrc_lexicon):
     """
 
-    :param galc_lexicon:
+    :param nrc_lexicon:
     :return: sm_list
     """
-    emotions = galc_lexicon.columns.values
+    emotions = nrc_lexicon.columns.values
     sm_list = []
     for emotion in emotions:
-        sm = list(galc_lexicon[emotion].dropna())
+        sm = list(nrc_lexicon[emotion].dropna())
         sm_list.append(sm)
-    ##save_list(sm_list, "MediumData/GalcLexiconList.txt")
     return sm_list

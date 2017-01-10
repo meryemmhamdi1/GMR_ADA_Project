@@ -50,6 +50,3 @@ def getAvgFeatureVecs(sentences, model, num_features):
         # Increment the counter
         counter = counter + 1.
     return sentenceFeatureVecs
-
-def FastText():
-    return 

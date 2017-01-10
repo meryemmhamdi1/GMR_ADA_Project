@@ -1,11 +1,11 @@
 # Implementation of Word level emotionalities
 from __future__ import division
-
+import sys
+sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis")
 import numpy as np
 from nltk.collocations import *
-import nltk
-import logging
 from gensim.models import word2vec
+from DataPreProcessing import *
 
 def calculate_pmi(flatten_list_nava, unique_lexicon):
     finder = BigramCollocationFinder.from_words(flatten_list_nava, window_size=10)
@@ -28,88 +28,69 @@ def calculate_pmi(flatten_list_nava, unique_lexicon):
     clean_pmi_dict = dict(clean_pmi)
     return clean_pmi_dict
 
-
-def compute_matrix_sentences_list(transcript_words, galc_lexicon, clean_pmi_dict):
+def compute_matrix_sentences_list_lexicon(nava_tweets, lexicon):
+    matrix_sentence_whole = []
+    for i in range(0,len(nava_tweets)): # for each sentence
+        w, h = len(nava_tweets[i]),10
+        matrix_sentence = [[0 for x in range(w)] for y in range(h)]
+        j = 0 
+        for word in nava_tweets[i]: # for each word
+            # Looking for match between that keyword and representative word in each emotion category in the lexicon
+            for e in range(0,lexicon.shape[1]):
+                if word in list(lexicon[str(e)]):
+                    matrix_sentence[e][j] = 1
+            j += 1
+        matrix_sentence_whole.append(matrix_sentence)
+    return matrix_sentence_whole
+    
+def compute_matrix_sentences_list(tweet_words, nrc_lexicon, clean_pmi_dict):
     """
 
     :param clean_pmi_dict:
-    :param transcript_words: we can pass any version of the bag of words
-    :param galc_lexicon:
+    :param tweet_words: we can pass any version of the bag of words
+    :param nrc_lexicon:
     :return:
     """
 
-    sm_list = list_galc_lexicon(galc_lexicon)
-    emotions = galc_lexicon.columns.values
+    sm_list = list_nrc_lexicon(nrc_lexicon)
+    emotions = nrc_lexicon.columns.values
     matrix_sentences_list = []
-    for i in range(0, len(transcript_words)): # Iterate over all sentences
-        # print "Tokenized Sentence :"
-        # print transcript_words[i]
+    for i in range(0, len(tweet_words)): # Iterate over all sentences
         " Initialize matrix for each sentence "
-        w, h = len(transcript_words[i]), 10
+        w, h = len(tweet_words[i]), 10
         matrix_sentence = [[0 for x in range(w)] for y in range(h)]
         k = 0
-        for (word, tag) in transcript_words[i]: # Iterate over all words in the sentence
+        for (word, tag) in tweet_words[i]: # Iterate over all words in the sentence
             j = 0
             for emotion in range(0, len(emotions)): # Iterate over all emotions => fill in the emotional vectors for all words
                 total_pmi = 1
                 for representative_word in sm_list[emotion]:
                     r = len(sm_list[emotion])
-                    total_pmi *= clean_pmi_dict.get((word, representative_word), 1)
-                matrix_sentence[j][k] = np.power(total_pmi,1/r)
+                    total_pmi += clean_pmi_dict.get((word, representative_word), 0)
+                if word in sm_list[emotion]:
+                    matrix_sentence[j][k] += 10
+                else:
+                    matrix_sentence[j][k] += total_pmi / r
                 j += 1 # increment index of representative words
-            k += 1 # increment index of transcript words
-        # print matrix_sentence
-        # apply_syntactic_rules(transcript_words[i], matrix_sentence)
+            k += 1 # increment index of tweet words
         # append the matrix_sentence to the global list for all sentences
         matrix_sentences_list.append(matrix_sentence)
-    #save_list(matrix_sentences_list, "EmotionResults/matrix_sentences_list.txt")
     return matrix_sentences_list
 
-
-def train_word2Vec_model(num_features_v, min_word_count_v, num_workers_v, context_v, downsampling_v, tweets, model_name):
-    # Import the built-in logging module and configure it so that Word2Vec 
-    # creates nice output messages
     
-    logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',\
-        level=logging.INFO)
-
-    # Set values for various parameters
-    num_features = num_features_v    # Word vector dimensionality                      
-    min_word_count = min_word_count_v   # Minimum word count                        
-    num_workers = num_workers_v       # Number of threads to run in parallel
-    context = context_v          # Context window size                                                                                    
-    downsampling = downsampling_v   # Downsample setting for frequent words
-
-    # Initialize and train the model (this will take some time)
-    print ("Training model...")
-    model = word2vec.Word2Vec(tweets, workers=num_workers, 
-                size=num_features, min_count = min_word_count, 
-                window = context, sample = downsampling)
-
-    # If you don't plan to train the model any further, calling 
-    # init_sims will make the model much more memory-efficient.
-    model.init_sims(replace=True)
-
-    # It can be helpful to create a meaningful model name and 
-    # save the model for later use. You can load it later using Word2Vec.load()
-    model.save(model_name)
-    return model
-    
-def compute_matrix_sentences_list_word2vec(transcript_words, galc_lexicon,model):
+def compute_matrix_sentences_list_word2vec(transcript_words, nrc_lexicon,model):
     """
 
-    :param clean_pmi_dict:
+    :param word2vec model:
     :param transcript_words: we can pass any version of the bag of words
-    :param galc_lexicon:
+    :param nrc_lexicon:
     :return:
     """
 
-    sm_list = list_galc_lexicon(galc_lexicon)
-    emotions = galc_lexicon.columns.values
+    sm_list = list_nrc_lexicon(nrc_lexicon)
+    emotions = nrc_lexicon.columns.values
     matrix_sentences_list = []
     for i in range(0, len(transcript_words)): # Iterate over all sentences
-        # print "Tokenized Sentence :"
-        # print transcript_words[i]
         " Initialize matrix for each sentence "
         w, h = len(transcript_words[i]), 10
         matrix_sentence = [[0 for x in range(w)] for y in range(h)]
@@ -117,17 +98,17 @@ def compute_matrix_sentences_list_word2vec(transcript_words, galc_lexicon,model)
         for (word, tag) in transcript_words[i]: # Iterate over all words in the sentence
             j = 0
             for emotion in range(0, len(emotions)): # Iterate over all emotions => fill in the emotional vectors for all words
-                total_similarity = 1
+                total_similarity = 0
                 for representative_word in sm_list[emotion]:
                     r = len(sm_list[emotion])
                     if word in model and representative_word in model:
-                        total_similarity *= model.similarity(word, representative_word) * 10
-                matrix_sentence[j][k] = np.power(total_similarity,1/r)
+                        total_similarity += model.similarity(word, representative_word)
+                if word in sm_list[emotion]:
+                    matrix_sentence[j][k] += 10
+                else:
+                    matrix_sentence[j][k] += total_similarity / r  # np.power(total_similarity,1/r)
                 j += 1 # increment index of representative words
             k += 1 # increment index of transcript words
-        # print matrix_sentence
-        # apply_syntactic_rules(transcript_words[i], matrix_sentence)
         # append the matrix_sentence to the global list for all sentences
         matrix_sentences_list.append(matrix_sentence)
-    #save_list(matrix_sentences_list, "EmotionResults/matrix_sentences_list.txt")
     return matrix_sentences_list

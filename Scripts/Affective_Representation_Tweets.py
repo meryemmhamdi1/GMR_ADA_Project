@@ -1,0 +1,111 @@
+import pandas as pd
+import sys
+sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis") 
+from DataSchemaExtractionParsing import *
+from DataPreProcessing import *
+from SentSemanticModule import *
+from SentTweetModule import *
+from SentSyntacticModule import *
+import math
+
+###### STEP 1: Loading Data:
+# HERE YOU CAN CHANGE THE NAME OF THE FILE FROM WHICH TO LOAD THE DATA
+tweets = pd.read_csv("/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/Data/en_sample.csv", encoding ="utf-8")
+
+###### STEP 2: Replacing Special Categories:
+print "SOME CLEANING >>>>>"
+replaced_categories = handle_special_categories(tweets)
+
+###### STEP 3: Replacing contractions (needed for more accurate tokenization)
+tweets_no_contractions = replace_contractions(replaced_categories)
+
+###### STEP 4: Tokenization of Tweets into words
+print "BAG OF WORD REPRESENTATION >>>>>"
+tokenized_list = bag_of_word_representation(tweets_no_contractions)
+
+
+### REMOVING PART OF SENTENCE BEFORE CONCESSION AS IT WOULD CONTRADICT WHAT FOLLOWS
+print "REMOVING PART OF SENTENCE BEFORE CONCESSION >>>>>"
+new_transcripts = []
+for i in range(0, len(tokenized_list)):
+    l1 = tokenized_list[i]
+    if u'however' in l1:
+        l1 = l1[l1.index(u'however') + 1:]
+    if u'However' in l1:
+        l1 = l1[l1.index(u'However') + 1:]
+    if u'but' in l1:
+        l1 = l1[l1.index(u'but')+1:]
+    if u'But' in l1:
+        l1 = l1[l1.index(u'But') + 1:]
+    if u'nevertheless' in l1:
+        l1 = l1[l1.index(u'nevertheless') + 1:]
+    if u'Nevertheless' in l1:
+        l1 = l1[l1.index(u'Nevertheless') + 1:]
+    new_transcripts.append(l1)
+
+###### STEP 5: Part of Speech Tagging:
+print "Part of Speech Tagging >>>>>"
+tagged_tweets = pos_tagging(new_transcripts)
+
+###### STEP 6: Tokenized Lemmatized Representation:
+print "Lemmatization >>>>>"
+new_tagged = normalize_pos_tags_words(tagged_tweets)
+tokenized_lemma = lemmatizer_raw(new_tagged)
+
+print "LOADING spaCy NLP >>>>>"
+###### STEP 7: Loading spaCy:
+nlp = spacy.load('en')
+
+print "Dependency Parsing >>>>>"
+###### STEP 8: Dependency Parsing:
+docs = []
+# Joining text:
+tweets_text = []
+for i in range(0, len(tokenized_list)):
+    space = u" "
+    tweets_text.append(space.join(new_transcripts[i]))
+tweets_text[0].encode("utf-8")
+for i in range(0, len(tweets_text)):
+    doc = nlp(tweets_text[i])
+    docs.append(doc)
+
+new_samples = []
+for sample in docs:
+    new_samples_sub = []
+    for word in sample:
+        new_samples_sub.append((unicode(word.lemma_),word.pos_))
+    new_samples.append(new_samples_sub)
+
+print "Applying Syntactic Rules >>>>>>"
+
+###### STEP 9: Applying Syntactic Rules:
+new_samples,triple_dependencies = apply_syntactic_rules(docs,new_samples)
+
+print "Further Cleaning >>>>>>>>>>"
+###### STEP 10: Applying Named Entity Tagging:
+tweet_without_ne = remove_named_entities(new_samples)
+
+
+###### STEP 11: Normalizing POS tag:
+normalized_tags = normalize_pos_tags_words(tweet_without_ne)
+
+###### STEP 12: Removal of Punctuation and Stop words and Converting to Lower Case and Removal of Other special categories: url, number, username:
+tagged_tweets_without = eliminate_stop_words_punct(normalized_tags)
+
+###### STEP 13: Lemmatization:
+lemmatized_tweets = lemmatizer(tagged_tweets_without)
+
+lemmatized_tweets_untag = lemmatizer_untagged(tagged_tweets_without)
+
+###### STEP 14: Keeping only NAVA words:
+nava_tweets = keep_only_nava_words(lemmatized_tweets)
+
+print "Storing in DataFrame"
+###### STEP 16: Storing Tokenized Lemmatized + Affective Representation + Emotion for each tweet
+tweets_df = pd.DataFrame()
+
+tweets_df['Tokenized Lemmatized'] = tokenized_lemma
+
+tweets_df['Nava Representation'] = nava_tweets
+
+tweets_df.to_csv('/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/Results/Test/Unannotated_Representation.csv')
