@@ -5,7 +5,10 @@ import sys
 import numpy as np
 from nltk.collocations import *
 from gensim.models import word2vec
-from DataPreProcessing import *
+from EmotionAnalysis.DataPreProcessing import *
+from tqdm import tqdm
+from joblib import Parallel, delayed
+from math import sqrt
 
 def calculate_pmi(flatten_list_nava, unique_lexicon):
     finder = BigramCollocationFinder.from_words(flatten_list_nava, window_size=10)
@@ -24,23 +27,32 @@ def calculate_pmi(flatten_list_nava, unique_lexicon):
     for ((w1, w2), value) in pmi:
         if w2 in unique_lexicon:
             clean_pmi.append(((w1, w2), value))
+        if w1 in unique_lexicon:
+            clean_pmi.append(((w2, w1), value))
 
     clean_pmi_dict = dict(clean_pmi)
     return clean_pmi_dict
 
+def update_matrix_sentence_whole (lexicon, nava_tweets_i,matrix_sentence_whole):
+    w, h = len(nava_tweets_i),10
+    matrix_sentence = [[0 for x in range(w)] for y in range(h)]
+    j = 0
+    for word in nava_tweets_i: # for each word
+        #print nava_tweets_i
+        # Looking for match between that keyword and representative word in each emotion category in the lexicon
+        for e in range(0,lexicon.shape[1]):
+            if word in list(lexicon[str(e)]):
+                matrix_sentence[e][j] = 1
+        j += 1
+    matrix_sentence_whole.append(matrix_sentence)
+    return matrix_sentence_whole
+
 def compute_matrix_sentences_list_lexicon(nava_tweets, lexicon):
     matrix_sentence_whole = []
-    for i in range(0,len(nava_tweets)): # for each sentence
-        w, h = len(nava_tweets[i]),10
-        matrix_sentence = [[0 for x in range(w)] for y in range(h)]
-        j = 0 
-        for word in nava_tweets[i]: # for each word
-            # Looking for match between that keyword and representative word in each emotion category in the lexicon
-            for e in range(0,lexicon.shape[1]):
-                if word in list(lexicon[str(e)]):
-                    matrix_sentence[e][j] = 1
-            j += 1
-        matrix_sentence_whole.append(matrix_sentence)
+    matrix_sentence_whole = Parallel(n_jobs=1)( delayed(update_matrix_sentence_whole) (lexicon,nava_tweets[i],matrix_sentence_whole) for i in tqdm(range(0,len(nava_tweets))) )
+    #Parallel(n_jobs=2)(delayed(sqrt)(i ** 2) for i in range(10))
+    #list_ = [[[0, 0], [1, 0], [0, 0], [0, 0], [1, 0], [0, 0], [1, 0], [0, 0], [1, 0], [1, 0]]]
+    #print matrix_sentence_whole
     return matrix_sentence_whole
     
 def compute_matrix_sentences_list(tweet_words, nrc_lexicon, clean_pmi_dict):
@@ -55,7 +67,7 @@ def compute_matrix_sentences_list(tweet_words, nrc_lexicon, clean_pmi_dict):
     sm_list = list_nrc_lexicon(nrc_lexicon)
     emotions = nrc_lexicon.columns.values
     matrix_sentences_list = []
-    for i in range(0, len(tweet_words)): # Iterate over all sentences
+    for i in tqdm(range(0, len(tweet_words))): # Iterate over all sentences
         " Initialize matrix for each sentence "
         w, h = len(tweet_words[i]), 10
         matrix_sentence = [[0 for x in range(w)] for y in range(h)]
@@ -90,7 +102,7 @@ def compute_matrix_sentences_list_word2vec(transcript_words, nrc_lexicon,model):
     sm_list = list_nrc_lexicon(nrc_lexicon)
     emotions = nrc_lexicon.columns.values
     matrix_sentences_list = []
-    for i in range(0, len(transcript_words)): # Iterate over all sentences
+    for i in tqdm(range(0, len(transcript_words))): # Iterate over all sentences
         " Initialize matrix for each sentence "
         w, h = len(transcript_words[i]), 10
         matrix_sentence = [[0 for x in range(w)] for y in range(h)]
