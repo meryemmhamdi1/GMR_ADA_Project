@@ -1,11 +1,11 @@
 import pandas as pd
 import sys
 #sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis") 
-from DataSchemaExtractionParsing import *
-from DataPreProcessing import *
-from SentSemanticModule import *
-from SentTweetModule import *
-from SentSyntacticModule import *
+from EmotionAnalysis.DataSchemaExtractionParsing import *
+from EmotionAnalysis.DataPreProcessing import *
+from EmotionAnalysis.SentSemanticModule import *
+from EmotionAnalysis.SentTweetModule import *
+from EmotionAnalysis.SentSyntacticModule import *
 import ast
 
 ###### STEP 1: Loading Data with tokenized and affective representation:

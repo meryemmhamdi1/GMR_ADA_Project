@@ -1,9 +1,8 @@
 import numpy as np
 import pandas as pd
 import sys
-sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis")
-from DataPreProcessing import *
-from SEMProjectSemanticModule import *
+from EmotionAnalysis.DataPreProcessing import *
+from EmotionAnalysis.SentSemanticModule import *
 import ast
 
 print "Preparing Dataset"
@@ -20,7 +19,7 @@ print "Preparing Dataset"
 #whole_df = pd.concat(frames)
 #whole_df.to_csv('/home/meryem/Dropbox/meryem/algorithms/EmotionRecognition/FinalResults/Unannotated_Repr_Whole.csv',encoding='utf-8',index=False)
 
-whole_df = pd.read_csv('/home/meryem/Dropbox/meryem/algorithms/EmotionRecognition/FinalResults/Unannotated_Repr_Whole222.csv',encoding='utf-8')
+whole_df = pd.read_csv('../../Project_Backup/BigData/Unannotated_Representation_whole.csv')
 tokenized_lemma = whole_df['Tokenized Lemmatized']
 
 # Convert tokenized_lemma
@@ -33,14 +32,14 @@ flatten_list = [word for sublist in tokenized_lemmatized_tweets for word in subl
 print flatten_list[0]
 
 print "Extracting Lexicon"
-extended_galc_lexicon = pd.read_excel('/home/meryem/Dropbox/meryem/algorithms/Data/ExtendedGALCLexicon.xls')
-unique_lexicon = make_unique_lexicon(extended_galc_lexicon)
+lexicon_df = pd.read_csv('NRCLexicon/lexicon_nrc.csv', encoding='utf-8')
+unique_lexicon = make_unique_lexicon(lexicon_df)
 
 
 print "Training PMI dictionary"
 pmi_dict = calculate_pmi(flatten_list, unique_lexicon)
-np.save('/home/meryem/Dropbox/meryem/algorithms/EmotionRecognition/FinalResults/Models/clean_pmi.npy', pmi_dict)
+np.save('Models/pmi_dict.npy', pmi_dict)
 
 # Load
-pmi_dict_read = np.load('/home/meryem/Dropbox/meryem/algorithms/EmotionRecognition/FinalResults/Models/clean_pmi.npy').item()
-print pmi_dict_read
+pmi_dict_read = np.load('Models/pmi_dict.npy').item()
+#print pmi_dict_read

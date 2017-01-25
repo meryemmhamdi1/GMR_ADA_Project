@@ -21,10 +21,10 @@ def compute_sentence_emotion_vectors(matrix_sentences_list):
         ids = [0,1,2,3,4,7,8,9]
         for j in ids: # for each emotion
             sum_words = 0
-            for k in range(0, len(matrix_sentences_list[i][j])):
-                sum_words += matrix_sentences_list[i][j][k]
-            r = len(matrix_sentences_list[i][j])
-            if r != 0 : 
+            for k in range(0, len(matrix_sentences_list[i])):
+                sum_words += int(matrix_sentences_list[i][k][j])
+            r = len(matrix_sentences_list[i])
+            if r != 0 :
                 sum_words = sum_words / r # Arithmetic mean
             sum_sentence.append(sum_words)
         emotion_vector_list.append(sum_sentence)
@@ -37,9 +37,9 @@ def compute_sentence_sentiment_vectors(matrix_sentences_list):
         ids = [5,6]
         for j in ids: # for each emotion
             sum_words = 0
-            for k in range(0, len(matrix_sentences_list[i][j])):
-                sum_words += matrix_sentences_list[i][j][k]
-            r = len(matrix_sentences_list[i][j])
+            for k in range(0, len(matrix_sentences_list[i])):
+                sum_words += int(matrix_sentences_list[i][k][j])
+            r = len(matrix_sentences_list[i])
             if r != 0 : 
                 sum_words = sum_words / r
             sum_sentence.append(sum_words)

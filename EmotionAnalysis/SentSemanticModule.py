@@ -1,14 +1,8 @@
 # Implementation of Word level emotionalities
 from __future__ import division
-import sys
-#sys.path.insert(0, "/media/diskD/EPFL/Fall 2016/ADA/Project/GMR_ADA_Project/EmotionAnalysis")
-import numpy as np
 from nltk.collocations import *
-from gensim.models import word2vec
 from EmotionAnalysis.DataPreProcessing import *
 from tqdm import tqdm
-from joblib import Parallel, delayed
-from math import sqrt
 
 def calculate_pmi(flatten_list_nava, unique_lexicon):
     finder = BigramCollocationFinder.from_words(flatten_list_nava, window_size=10)
@@ -47,7 +41,7 @@ def update_matrix_sentence_whole (lexicon, nava_tweets_i,matrix_sentence_whole):
     matrix_sentence_whole.append(matrix_sentence)
     return matrix_sentence_whole
 
-def compute_matrix_sentences_list_lexicon(nava_tweets, lexicon):
+def compute_matrix_sentences_list_lexicon(nava_tweets, vector_dict):
     #matrix_sentence_whole = []
     #matrix_sentence_whole = Parallel(n_jobs=1)( delayed(update_matrix_sentence_whole) (lexicon,nava_tweets[i],matrix_sentence_whole) for i in tqdm(range(0,len(nava_tweets))) )
     #Parallel(n_jobs=2)(delayed(sqrt)(i ** 2) for i in range(10))
@@ -56,17 +50,17 @@ def compute_matrix_sentences_list_lexicon(nava_tweets, lexicon):
     #return matrix_sentence_whole
 
     matrix_sentence_whole = []
-    for i in range(0,len(nava_tweets)): # for each sentence
-        w, h = len(nava_tweets[i]),20
-        matrix_sentence = [[0 for x in range(w)] for y in range(h)]
-        j = 0
+    empty_ = [0 for i in range(0,10)]
+
+    for i in tqdm(range(0,len(nava_tweets))): # for each sentence
+        matrix_sentence_sub = []
         for word in nava_tweets[i]: # for each word
             # Looking for match between that keyword and representative word in each emotion category in the lexicon
-            for e in range(1,lexicon.shape[1]+1):
-                if word in list(lexicon[e]):
-                    matrix_sentence[e-1][j] = 1
-            j += 1
-        matrix_sentence_whole.append(matrix_sentence)
+            if word in vector_dict.keys():
+                matrix_sentence_sub.append(vector_dict[word])
+            else:
+                matrix_sentence_sub.append(empty_)
+        matrix_sentence_whole.append(matrix_sentence_sub)
     return matrix_sentence_whole
     
 def compute_matrix_sentences_list(tweet_words, nrc_lexicon, clean_pmi_dict):
@@ -86,7 +80,7 @@ def compute_matrix_sentences_list(tweet_words, nrc_lexicon, clean_pmi_dict):
         w, h = len(tweet_words[i]), 10
         matrix_sentence = [[0 for x in range(w)] for y in range(h)]
         k = 0
-        for (word, tag) in tweet_words[i]: # Iterate over all words in the sentence
+        for word in tweet_words[i]: # Iterate over all words in the sentence
             j = 0
             for emotion in range(0, len(emotions)): # Iterate over all emotions => fill in the emotional vectors for all words
                 total_pmi = 1
@@ -104,11 +98,11 @@ def compute_matrix_sentences_list(tweet_words, nrc_lexicon, clean_pmi_dict):
     return matrix_sentences_list
 
     
-def compute_matrix_sentences_list_word2vec(transcript_words, nrc_lexicon,model):
+def compute_matrix_sentences_list_word2vec(nava_words, nrc_lexicon,model):
     """
 
     :param word2vec model:
-    :param transcript_words: we can pass any version of the bag of words
+    :param nava_words: we can pass any version of the bag of words
     :param nrc_lexicon:
     :return:
     """
@@ -116,12 +110,12 @@ def compute_matrix_sentences_list_word2vec(transcript_words, nrc_lexicon,model):
     sm_list = list_nrc_lexicon(nrc_lexicon)
     emotions = nrc_lexicon.columns.values
     matrix_sentences_list = []
-    for i in tqdm(range(0, len(transcript_words))): # Iterate over all sentences
+    for i in tqdm(range(0, len(nava_words))): # Iterate over all sentences
         " Initialize matrix for each sentence "
-        w, h = len(transcript_words[i]), 10
+        w, h = len(nava_words[i]), 10
         matrix_sentence = [[0 for x in range(w)] for y in range(h)]
         k = 0
-        for (word, tag) in transcript_words[i]: # Iterate over all words in the sentence
+        for word in nava_words[i]: # Iterate over all words in the sentence
             j = 0
             for emotion in range(0, len(emotions)): # Iterate over all emotions => fill in the emotional vectors for all words
                 total_similarity = 0
