@@ -119,16 +119,14 @@ def compute_matrix_sentences_list_word2vec(nava_words, nrc_lexicon,model):
             j = 0
             for emotion in range(0, len(emotions)): # Iterate over all emotions => fill in the emotional vectors for all words
                 total_similarity = 0
-                for representative_word in sm_list[emotion]:
+                for representative_word in sm_list[emotion][0:13]:
                     r = len(sm_list[emotion])
                     if word in model and representative_word in model:
                         total_similarity += model.similarity(word, representative_word)
-                if word in sm_list[emotion]:
-                    matrix_sentence[j][k] += 10
-                else:
-                    matrix_sentence[j][k] += total_similarity / r  # np.power(total_similarity,1/r)
+                matrix_sentence[j][k] += total_similarity / r 
                 j += 1 # increment index of representative words
             k += 1 # increment index of transcript words
         # append the matrix_sentence to the global list for all sentences
         matrix_sentences_list.append(matrix_sentence)
     return matrix_sentences_list
+

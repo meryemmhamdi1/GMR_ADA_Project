@@ -9,16 +9,15 @@ from gensim.models import Word2Vec
 
 ##### STEP 1: Loading Data with tokenized and affective representation:
 
-tweets_df = pd.read_csv('../../Project_Backup/BigData/Unannotated_Representation_part1.csv',nrows=10)
+tweets_df = pd.read_csv('../../Project_Backup/BigData/Unannotated_Representation/en/Unannotated_Representation_part1.csv',nrows=10)
 
 nava_repr = tweets_df['Nava Representation']
 
 print ("Convert nava tweets")
 # Convert nava_tweets 
 nava_tweets = []
-for i in range(0, len(nava_repr)):
-    result = ast.literal_eval(nava_repr[i])
-    nava_tweets.append(result)
+for i in tqdm(range(0, len(nava_repr))):
+    nava_tweets.append(nava_repr[i][1:len(nava_repr[i])-1].split(', '))
 
 print ("Loading Lexicon")
 ###### STEP 2: Loading Lexicon:
@@ -27,7 +26,7 @@ unique_lexicon = make_unique_lexicon(lexicon_df)
 
 ###### STEP 3: Loading Word2Vec Model:
 print ("Loading Word2Vec")
-model = Word2Vec.load('Models/whole_en_model')
+model = Word2Vec.load('../../Project_Backup/BigData/Models/whole_en_model')
 
 ###### STEP 4: Word Level
 print ("Computing word level scores")

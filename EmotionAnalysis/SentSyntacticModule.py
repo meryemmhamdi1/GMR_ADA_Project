@@ -45,3 +45,50 @@ def apply_syntactic_rules(docs,new_samples):
                 new_samples[i] = [x for x in new_samples[i] if x != (unicode(word.lemma_),word.pos_)]
         triple_dependencies.append(triple_dependencies_sub)
     return new_samples,triple_dependencies
+
+
+
+def apply_syntactic_rules_german(docs,new_samples):
+    triple_dependencies = []
+    samples = docs
+    for i in range(0,len(samples)):
+        negated_verbs = []
+        negated_nouns = []
+        triple_dependencies_sub = []
+        for j in range(0,len(samples[i])):
+            #print "i="+str(i)
+            #print "j="+str(j)
+            word = samples[i][j]
+            #print word
+            triple_dependencies_sub.append((word.lemma_,word.dep_,word.head.lemma_))
+            # Looking for negation dependency
+            if word.dep == neg:
+                new_samples[i].append(("nicht_"+str(word.head.lemma_),word.head.pos_))
+                new_samples[i] = [x for x in new_samples[i] if x != (unicode(word.head.lemma_),word.head.pos_) and x!=(unicode(word.lemma_),word.pos_)]
+                if word.head.pos == VERB:
+                    negated_verbs.append(word.head.i)
+            # Looking for adjectival complement
+            if word.dep == acomp:
+                if word.head.i in negated_verbs:
+                    new_samples[i].append(("nicht_"+str(word.lemma_),word.pos_))
+                    new_samples[i] = [x for x in new_samples[i] if x != ("nicht_"+str(word.head.lemma_),word.head.pos_) and x != (unicode(word.lemma_),word.pos_)]
+                else:
+                    new_samples[i] = [x for x in new_samples[i] if x != (unicode(word.head.lemma_),word.head.pos_)]
+            # Looking for negation in nouns and adjectives
+            if word.lemma_ == "nicht" or word.lemma_ == "nie":
+                if word.head.pos == NOUN:
+                    new_samples[i].append(("nicht_"+str(word.head.lemma_),word.head.pos_))
+                    new_samples[i] = [x for x in new_samples[i] if x != (unicode(word.head.lemma_),word.head.pos_) and x!=(unicode(word.lemma_),word.pos_)]
+                    negated_nouns.append(word.head.i)
+            # Looking for adjectival modifier
+            if word.dep == amod:
+                if word.head.i in negated_nouns:
+                    new_samples[i].append(("nicht_"+str(word.lemma_),word.pos_))
+                    new_samples[i] = [x for x in new_samples[i] if x != ("nicht_"+str(word.head.lemma_),word.head.pos_) and x != (unicode(word.lemma_),word.pos_)]
+                else:
+                    new_samples[i] = [x for x in new_samples[i] if x != (unicode(word.head.lemma_),word.head.pos_)]
+            # Looking for adverbial modifier
+            if word.dep == advmod:
+                new_samples[i] = [x for x in new_samples[i] if x != (unicode(word.lemma_),word.pos_)]
+        triple_dependencies.append(triple_dependencies_sub)
+    return new_samples,triple_dependencies
