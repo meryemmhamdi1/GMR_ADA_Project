@@ -1,5 +1,7 @@
 # Estimation and Visualization of Canton-Level Moods using Hybrid Fine-Grained Emotion Analysis Methodologies
 
+Please refer to for https://gokcennurlu.github.io/ADA-project-static/index.html to have access to rich user interface for visualizations of maps. 
+
 ### Abstract
 The increasing availability of geolocated data in social media opened new ventures in the exploration and understanding of spatio-temporal movements patterns and possibilities to explain such irregularities in the mobility data. Twitter offers both individual and crowd-based geotagged data at different levels of precision.  
 
