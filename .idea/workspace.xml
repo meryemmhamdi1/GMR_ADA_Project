@@ -2,21 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6933cccd-cdc2-4747-8b25-2f2da689d305" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/.gitignore" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/Scripts/Affective_Representation_Tweets.py" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Scripts/TrainingWord2Vec.py" afterPath="$PROJECT_DIR$/TrainingWord2Vec.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Scripts/Training_Fast_Text_CBOW.py" afterPath="$PROJECT_DIR$/Training_Fast_Text_CBOW.py" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/Scripts/Training_Fast_Text_SkipGram.py" afterPath="$PROJECT_DIR$/Training_Fast_Text_SkipGram.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Affective_Representation_Tweets.py" afterPath="$PROJECT_DIR$/Affective_Representation_Tweets.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Emotion Recognition for Other Languages.ipynb" afterPath="$PROJECT_DIR$/Emotion Recognition for Other Languages.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EmotionAnalysis/DataPreProcessing.py" afterPath="$PROJECT_DIR$/EmotionAnalysis/DataPreProcessing.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EmotionAnalysis/SentSemanticModule.py" afterPath="$PROJECT_DIR$/EmotionAnalysis/SentSemanticModule.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/EmotionAnalysis/SentSyntacticModule.py" afterPath="$PROJECT_DIR$/EmotionAnalysis/SentSyntacticModule.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rule Based Lexicon Only.ipynb" afterPath="$PROJECT_DIR$/Rule Based Lexicon Only.ipynb" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.ipynb_checkpoints/Rule Based Word2Vec-checkpoint.ipynb" afterPath="$PROJECT_DIR$/.ipynb_checkpoints/Rule Based Word2Vec-checkpoint.ipynb" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rule Based Word2Vec.ipynb" afterPath="$PROJECT_DIR$/Rule Based Word2Vec.ipynb" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rule_Based_Lexicon.py" afterPath="$PROJECT_DIR$/Rule_Based_Lexicon.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Rule_Based_Word2Vec.py" afterPath="$PROJECT_DIR$/Rule_Based_Word2Vec.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Semi-Supervised Emotion Recognition .ipynb" afterPath="$PROJECT_DIR$/Semi-Supervised Emotion Recognition .ipynb" />
     </list>
     <ignored path="GMR_ADA_Project.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -83,11 +71,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RemovingStopWordsOtherLanguages.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="RemovingStopWordsOtherLanguages.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/RemovingStopWordsOtherLanguages.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.22068965">
-              <caret line="14" column="66" selection-start-line="14" selection-start-column="66" selection-end-line="14" selection-end-column="66" />
+            <state vertical-scroll-proportion="0.0">
+              <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -105,11 +93,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SentSemanticModule.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SentSemanticModule.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/EmotionAnalysis/SentSemanticModule.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0">
-              <caret line="89" column="44" selection-start-line="89" selection-start-column="44" selection-end-line="89" selection-end-column="44" />
+            <state vertical-scroll-proportion="0.8206897">
+              <caret line="125" column="62" selection-start-line="120" selection-start-column="16" selection-end-line="125" selection-end-column="62" />
               <folding>
                 <element signature="e#46#77#0" expanded="true" />
               </folding>
@@ -688,7 +676,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="7" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -1063,16 +1051,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/EmotionAnalysis/SentSemanticModule.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="89" column="44" selection-start-line="89" selection-start-column="44" selection-end-line="89" selection-end-column="44" />
-          <folding>
-            <element signature="e#46#77#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Rule_Based_Word2Vec.py">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
@@ -1135,10 +1113,20 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/RemovingStopWordsOtherLanguages.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.22068965">
-          <caret line="14" column="66" selection-start-line="14" selection-start-column="66" selection-end-line="14" selection-end-column="66" />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="22" column="16" selection-start-line="22" selection-start-column="16" selection-end-line="22" selection-end-column="16" />
           <folding>
             <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/EmotionAnalysis/SentSemanticModule.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.8206897">
+          <caret line="125" column="62" selection-start-line="120" selection-start-column="16" selection-end-line="125" selection-end-column="62" />
+          <folding>
+            <element signature="e#46#77#0" expanded="true" />
           </folding>
         </state>
       </provider>
