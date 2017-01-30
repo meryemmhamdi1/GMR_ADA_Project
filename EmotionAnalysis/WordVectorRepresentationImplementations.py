@@ -2,6 +2,7 @@
     # Word2Vec
     # FastText
 import numpy as np  # Make sure that numpy is imported
+from tqdm import tqdm
 
 def makeFeatureVec(words, model, num_features):
     # Function to average all of the word vectors in a given
@@ -42,10 +43,10 @@ def getAvgFeatureVecs(sentences, model, num_features):
     sentenceFeatureVecs = np.zeros((len(sentences),num_features),dtype="float32")
     # 
     # Loop through the sentences
-    for sentence in sentences:
+    for i in tqdm(range(0,len(sentences))):
         # 
         # Call the function (defined above) that makes average feature vectors
-        sentenceFeatureVecs[counter] = makeFeatureVec(sentence, model, num_features)
+        sentenceFeatureVecs[counter] = makeFeatureVec(sentences[i], model, num_features)
         #
         # Increment the counter
         counter = counter + 1.
