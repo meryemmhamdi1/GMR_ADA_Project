@@ -2,6 +2,8 @@
 
 Please refer to for https://gokcennurlu.github.io/ADA-project-static/index.html to have access to rich user interface for visualizations of maps. 
 
+Code for Visualization and Website can be found in repositories. Please follow the following links:
+
 ### Abstract
 The increasing availability of geolocated data in social media opened new ventures in the exploration and understanding of spatio-temporal movements patterns and possibilities to explain such irregularities in the mobility data. Twitter offers both individual and crowd-based geotagged data at different levels of precision.  
 
@@ -30,13 +32,11 @@ One of the limitations that we are currently thinking of is the possibility that
 | 21/11 - 27/11 | Step II: Canton Detection using Geolocated Information|  |  |
 | 28/11 - 04/12 | Step III: Language Detection |  |  |
 | 05/12 - 11/12 | Step IV: Fine Grained Emotion Recognition - Affective Feature Extraction- <ul><li>Syntactic Analysis using POS and dependency parsing and application of syntactic rules </li><li>Affetive Feature Refinement using NRE and keeping NAVA words </li><li>Lemmatization and stopword removal </li></ul>   |  |  |
-| 12/12 - 18/12 | Step V: Fine Grained Emotion Recognition - Semantic Analysis - <ul> <li>Lexicon Spotting </li><li>Word Embedding Similarity </li></ul>  |  | Checkpoint Mid December (TBD)|
+| 12/12 - 18/12 | Step V: Fine Grained Emotion Recognition - Semantic Analysis - <ul> <li>Lexicon Spotting </li><li>Word Embedding Similarity </li></ul>  |  | Checkpoint Mid December |
 | 19/12 - 25/12 | Step VI: Fine Grained Emotion Recognition - Semi-Supervised Approach- |  |  |
 | 09/01 - 15/01 |<ul> <li> Step VII: Fine Tuning ML models and Evaluation of Results </li>  <li> Step VIII: Design and Creation of Draft Multi-Dimensional Visualization Polarity and Mood Maps and Draft Website </li> </ul>  |  |  |
 | 16/01 - 22/01 | Step IX: Addition of Sliding Window for Time Dimension and Hierarchical Use Interface  |   |   |
-| 23/01 - 29/01 | Final Preparation of the poster and the symposium |  | Mini-Symposium (Group Poster/ Website)  End of January (TBD)
+| 23/01 - 29/01 | Final Preparation of the poster and the symposium |  | Mini-Symposium (Group Poster/ Website)  31st of January
 
 
              
-### Note
-This is a tentative plan, the Deliverables and the Timeplan might change a little bit as we start working on the project and exploring the data. We will adjust this proposal if we decide to make some changes.
