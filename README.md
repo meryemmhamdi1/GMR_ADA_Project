@@ -2,7 +2,11 @@
 
 Please refer to for https://gokcennurlu.github.io/ADA-project-static/index.html to have access to rich user interface for visualizations of maps. 
 
-Code for Visualization and Website can be found in repositories. Please follow the following links:
+Code for Visualization and Website can be found in the repository below:
+https://github.com/gokcennurlu/ADA-project-static
+
+The snippet that is used to map coordinates to cantons can be found in the repository below:
+https://github.com/gokcennurlu/canton_mapping_tests
 
 ### Abstract
 The increasing availability of geolocated data in social media opened new ventures in the exploration and understanding of spatio-temporal movements patterns and possibilities to explain such irregularities in the mobility data. Twitter offers both individual and crowd-based geotagged data at different levels of precision.  
