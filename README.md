@@ -9,9 +9,11 @@ The snippet that is used to map coordinates to cantons can be found in the repos
 https://github.com/gokcennurlu/canton_mapping_tests
 
 ### Abstract
-The increasing availability of geolocated data in social media opened new ventures in the exploration and understanding of spatio-temporal movements patterns and possibilities to explain such irregularities in the mobility data. Twitter offers both individual and crowd-based geotagged data at different levels of precision.  
+This goal of the project is to build a platform for capturing sentiments and emotions expressed using twitter in swiss cantons. The platform uses Twitter as a data source and combines sentiment analysis, Hybrid Fine-Grained Emotion Analysis Methodologies, and visualization techniques in order to provide users with an interactive interface for data exploration.
 
-The main objective of this project is to understand what triggers mobility in Switzerland by estimating how emotions of users change from one canton to another based on spatio-temporal data. We have followed fine-grained emotion recognition methodology and developped a platform for visualizing happiness in the swiss cantons to provide users and the general public with an interactive interface for mood pattern exploration using multiple time, space and user dimensions. 
+This platform provides interactive maps in order to give users the possibility to have a comprehensive overview of the sentiment and emotion analysis results about Swiss cantons  and with the opportunity to zoom in to a specific canton to visualize the distribution of emotions and sentiment during a specific time.
+
+The platform allows users to tune their view on such  huge amount of information and to interactively reduce the inherent complexity, possibly providing a hint for finding meaningful patterns, and correlation between moods/emotion and time.
 
 
 ### Data Description
