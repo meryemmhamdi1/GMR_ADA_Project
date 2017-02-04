@@ -134,7 +134,7 @@ def keep_only_nava_words(tagged_tweets):
     tweets_nava_sub = []
     for i in range(0, len(tagged_tweets)):
         for (word, tag) in tagged_tweets[i]:
-            if tag == "n" or tag == "v" or tag =="Adj" or tag == "Adv":
+            if tag == "n" or tag == "v" or tag =="ADJ" or tag == "ADV":
                 tweets_nava_sub.append(word)
         tweets_nava.append(list(tweets_nava_sub))
         tweets_nava_sub = []
@@ -220,7 +220,7 @@ def eliminate_stop_words_punct(tagged_tweets):
     :param tagged_tweets:
     :return: tagged_tweets_without
     """
-    stop_words = list(set(stopwords.words('arabic')))
+    stop_words = list(set(stopwords.words('english')))
     non_emotinal_verbs = ['go','be','do','have','get']
     customized_stop_words = stop_words + non_emotinal_verbs
     tagged_tweets_without = []

@@ -52,7 +52,7 @@ def compute_matrix_sentences_list_lexicon(nava_tweets, vector_dict):
     matrix_sentence_whole = []
     empty_ = [0 for i in range(0,10)]
 
-    for i in tqdm(range(0,len(nava_tweets))): # for each sentence
+    for i in range(0,len(nava_tweets)): # for each sentence
         matrix_sentence_sub = []
         for word in nava_tweets[i]: # for each word
             # Looking for match between that keyword and representative word in each emotion category in the lexicon
@@ -75,7 +75,7 @@ def compute_matrix_sentences_list(tweet_words, nrc_lexicon, clean_pmi_dict):
     sm_list = list_nrc_lexicon(nrc_lexicon)
     emotions = nrc_lexicon.columns.values
     matrix_sentences_list = []
-    for i in tqdm(range(0, len(tweet_words))): # Iterate over all sentences
+    for i in range(0, len(tweet_words)): # Iterate over all sentences
         " Initialize matrix for each sentence "
         w, h = len(tweet_words[i]), 10
         matrix_sentence = [[0 for x in range(w)] for y in range(h)]
@@ -110,7 +110,7 @@ def compute_matrix_sentences_list_word2vec(nava_words, nrc_lexicon,model):
     sm_list = list_nrc_lexicon(nrc_lexicon)
     emotions = nrc_lexicon.columns.values
     matrix_sentences_list = []
-    for i in tqdm(range(0, len(nava_words))): # Iterate over all sentences
+    for i in range(0, len(nava_words)): # Iterate over all sentences
         " Initialize matrix for each sentence "
         w, h = len(nava_words[i]), 10
         matrix_sentence = [[0 for x in range(w)] for y in range(h)]

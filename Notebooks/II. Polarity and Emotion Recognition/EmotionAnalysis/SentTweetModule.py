@@ -16,7 +16,7 @@ def make_flat_list(data_list):
 
 def compute_sentence_emotion_vectors(matrix_sentences_list):
     emotion_vector_list = []
-    for i in tqdm(range(0, len(matrix_sentences_list))):
+    for i in range(0, len(matrix_sentences_list)):
         sum_sentence = []
         ids = [0,1,2,3,4,7,8,9]
         for j in ids: # for each emotion
@@ -32,7 +32,7 @@ def compute_sentence_emotion_vectors(matrix_sentences_list):
 
 def compute_sentence_sentiment_vectors(matrix_sentences_list):
     emotion_vector_list = []
-    for i in tqdm(range(0, len(matrix_sentences_list))):
+    for i in range(0, len(matrix_sentences_list)):
         sum_sentence = []
         ids = [5,6]
         for j in ids: # for each emotion
@@ -49,7 +49,7 @@ def compute_sentence_sentiment_vectors(matrix_sentences_list):
 def compute_emotionalities(sentence_vectors):
     emotionalities = []
     threshold = 0 # THRESHOLD PARAMETER TO BE FINE TUNED (0 for lexicon, 0.2 for pmi)
-    for i in tqdm(range(0,len(sentence_vectors))):
+    for i in range(0,len(sentence_vectors)):
         sentence_vector = sentence_vectors[i]
         mylist = [0 if math.isnan(x) else x for x in sentence_vector]
         if (max(mylist) > threshold): #Threshold 
@@ -61,7 +61,7 @@ def compute_emotionalities(sentence_vectors):
 def compute_sentiments(sentence_vectors_sent,emotionalities):
     sentiments = []
     threshold = 0 # THRESHOLD PARAMETER TO BE FINE TUNED (0 for lexicon, 0.2 for pmi)
-    for i in tqdm(range(0,len(sentence_vectors_sent))):
+    for i in range(0,len(sentence_vectors_sent)):
         sentence_vector = sentence_vectors_sent[i]
         mylist = [0 if math.isnan(x) else x for x in sentence_vector]
         if (max(mylist) > threshold): #Threshold 
