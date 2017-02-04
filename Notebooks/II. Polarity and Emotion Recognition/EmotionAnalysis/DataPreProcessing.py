@@ -10,7 +10,7 @@ from nltk.stem.porter import *
 from nltk.stem.snowball import SnowballStemmer
 from nltk.stem.wordnet import WordNetLemmatizer
 import nltk
-from tqdm import tqdm
+import pandas as pd
 
 # Remove Tweets where one of those columns is NAN:
 # 'createdAt', 'text'
@@ -29,23 +29,24 @@ def clean_tweets(sample_tweets):
 #   TODO: Detecting place / city / country / any geolocation cues in any part of the tweet (Create a dictionary of places/cities in Switzerland)
 def handle_special_categories(sample_tweets):
     tweets_list = []
-    for i in tqdm(range(0, len(sample_tweets))):
+    new_tweets = pd.DataFrame()
+    for i in range(0, len(sample_tweets)):
         new_text = re.sub(r"http\S+", "", sample_tweets.iloc[i]['text'])
         new_text = re.sub(r"@\S+", "", new_text)
         new_text = re.sub(r"\d+", "", new_text)
         new_text = re.sub(r"#", "", new_text)
         tweets_list.append(new_text)
-    sample_tweets['text'] = tweets_list
-    return sample_tweets
+    new_tweets['text'] = tweets_list 
+    return new_tweets
 
 def replace_contractions(sample_tweets):
-    f = io.open('contractions.txt', 'r',
+    f = io.open('../../Data/Other/contractions.txt', 'r',
                 encoding='utf8')
     text = f.read()
     contractions = eval(text)
     keys = list(contractions.keys())
     values = list(contractions.values())
-    for i in tqdm(range(0, len(contractions))):
+    for i in range(0, len(contractions)):
         sample_tweets = sample_tweets.replace({keys[i]: values[i]}, regex=True)
     return sample_tweets
 
@@ -62,7 +63,7 @@ def bag_of_word_representation(sample_tweets):
     """
     tweets_bag_words = []
     tokenizer = RegexpTokenizer(r'\w+')
-    for i in tqdm(range(0, len(sample_tweets))):
+    for i in range(0, len(sample_tweets)):
         # Removing of non-ascii character
         non_ascii_tweet = sample_tweets.iloc[i]['text'] #re.sub(r'[^\x00-\x7F]+','',sample_tweets.iloc[i]['text'])
         # tweets_filtered = [word for word in tweet if is_ascii(str(word))]  
@@ -78,7 +79,7 @@ def pos_tagging(tweets_bag_words):
     :return:
     """
     tagged_tweets = []
-    for i in tqdm(range(0, len(tweets_bag_words))):
+    for i in range(0, len(tweets_bag_words)):
         tagged_tweets.append(nltk.pos_tag(tweets_bag_words[i]))
     return tagged_tweets
 
@@ -89,7 +90,7 @@ def normalize_pos_tags_words(tagged_tweets):
     """
     tweets_nava = []
     tweets_nava_sub = []
-    for i in tqdm(range(0, len(tagged_tweets))):
+    for i in range(0, len(tagged_tweets)):
         for (word, tag) in tagged_tweets[i]:
             if tag == 'NN' or tag == 'NNP' or tag == 'NNPS' or tag == 'NNS':
                 tweets_nava_sub.append((word, 'n'))
@@ -112,7 +113,7 @@ def normalize_pos_tags_words1(tagged_tweets):
     """
     tweets_nava = []
     tweets_nava_sub = []
-    for i in tqdm(range(0, len(tagged_tweets))):
+    for i in range(0, len(tagged_tweets)):
         for (word, tag) in tagged_tweets[i]:
             if tag == "NOUN":
                 tweets_nava_sub.append((word, 'n'))
@@ -131,7 +132,7 @@ def keep_only_nava_words(tagged_tweets):
     """
     tweets_nava = []
     tweets_nava_sub = []
-    for i in tqdm(range(0, len(tagged_tweets))):
+    for i in range(0, len(tagged_tweets)):
         for (word, tag) in tagged_tweets[i]:
             if tag == "n" or tag == "v" or tag =="Adj" or tag == "Adv":
                 tweets_nava_sub.append(word)
@@ -156,7 +157,7 @@ def extract_entity_names(t):
 
 def remove_named_entities(new_samples):
     tweet_without_ne = []
-    for i in tqdm(range(0,len(new_samples))):
+    for i in range(0,len(new_samples)):
         nre_tweet = nltk.ne_chunk(new_samples[i], binary = True)
         non_entity_names = []
         for tree in nre_tweet:    
@@ -171,7 +172,7 @@ def remove_named_entities(new_samples):
 def lemmatizer(tweets):
     tweets_whole = []
     lmtzr = WordNetLemmatizer()
-    for i in tqdm(range(0,len(tweets))):
+    for i in range(0,len(tweets)):
         tweets_sub = []
         for (word,tag) in tweets[i]:
             if tag=='v' or tag =='n':
@@ -185,7 +186,7 @@ def lemmatizer(tweets):
 def lemmatizer_untagged(tweets):
     tweets_whole = []
     lmtzr = WordNetLemmatizer()
-    for i in tqdm(range(0,len(tweets))):
+    for i in range(0,len(tweets)):
         tweets_sub = []
         for (word,tag) in tweets[i]:
             if tag=='v' or tag =='n':
@@ -198,7 +199,7 @@ def lemmatizer_untagged(tweets):
 def lemmatizer_raw(tweets):
     tweets_whole = []
     lmtzr = WordNetLemmatizer()
-    for i in tqdm(range(0,len(tweets))):
+    for i in range(0,len(tweets)):
         tweets_sub = []
         for (word,tag) in tweets[i]:
             if tag=='v' or tag =='n':
@@ -223,7 +224,7 @@ def eliminate_stop_words_punct(tagged_tweets):
     non_emotinal_verbs = ['go','be','do','have','get']
     customized_stop_words = stop_words + non_emotinal_verbs
     tagged_tweets_without = []
-    for i in tqdm(range(0, len(tagged_tweets))):
+    for i in range(0, len(tagged_tweets)):
         tagged_tweets_without_sub = []
         for (word, tag) in tagged_tweets[i]:
             if word not in customized_stop_words and word not in ['url','number','username'] and len(word) >= 2:
