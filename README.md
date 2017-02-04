@@ -45,12 +45,12 @@ One of the limitations that we are currently thinking of is the possibility that
 
 ### Used Libraries
 
-<p>[Stanford Dependency Parser](http://nlp.stanford.edu/software/lex-parser.shtml)</p>
-<p>[spaCy NLP Tools](https://spacy.io/)</p>
-<p>[gensim word2vec](https://radimrehurek.com/gensim/models/word2vec.html)</p>
+[Stanford Dependency Parser](http://nlp.stanford.edu/software/lex-parser.shtml)  
+[spaCy NLP Tools](https://spacy.io/)    
+[gensim word2vec](https://radimrehurek.com/gensim/models/word2vec.html)  
 
 
 ### Other Resources:
-<p>[Plutchik Data](https://www.crowdflower.com/data-for-everyone/)</p>
-<p>[NRC Word-Emotion Association Lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)</p>
+[Plutchik Data](https://www.crowdflower.com/data-for-everyone/)  
+[NRC Word-Emotion Association Lexicon](http://saifmohammad.com/WebPages/NRC-Emotion-Lexicon.htm)  
              
