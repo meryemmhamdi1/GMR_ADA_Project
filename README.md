@@ -9,7 +9,7 @@ The snippet that is used to map coordinates to cantons can be found in the repos
 https://github.com/gokcennurlu/canton_mapping_tests
 
 ### Abstract
-This goal of the project is to build a platform for capturing sentiments and emotions expressed using twitter in swiss cantons. The platform uses Twitter as a data source and combines sentiment analysis, Hybrid Fine-Grained Emotion Analysis Methodologies, and visualization techniques in order to provide users with an interactive interface for data exploration.
+The goal of the project is to build a platform for capturing sentiments and emotions expressed using twitter in swiss cantons. The platform uses Twitter as a data source and combines sentiment analysis, Hybrid Fine-Grained Emotion Analysis Methodologies, and visualization techniques in order to provide users with an interactive interface for data exploration.
 
 This platform provides interactive maps in order to give users the possibility to have a comprehensive overview of the sentiment and emotion analysis results about Swiss cantons  and with the opportunity to zoom in to a specific canton to visualize the distribution of emotions and sentiment during a specific time.
 
