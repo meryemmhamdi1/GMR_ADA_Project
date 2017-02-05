@@ -43,7 +43,7 @@ def getAvgFeatureVecs(sentences, model, num_features):
     sentenceFeatureVecs = np.zeros((len(sentences),num_features),dtype="float32")
     # 
     # Loop through the sentences
-    for i in tqdm(range(0,len(sentences))):
+    for i in range(0,len(sentences)):
         # 
         # Call the function (defined above) that makes average feature vectors
         sentenceFeatureVecs[counter] = makeFeatureVec(sentences[i], model, num_features)
