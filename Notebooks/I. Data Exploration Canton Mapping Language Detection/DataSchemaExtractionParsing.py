@@ -28,3 +28,11 @@ def extractLexicon():
     lexicon['Score'] = lexicon['col'].str.split().apply(lambda x: x[-1])
     del (lexicon['col'])
     return lexicon
+
+# Remove Tweets where one of those columns is NAN:
+# 'createdAt', 'text'
+# 'longitude', 'latitude', 'placeLongitude', 'placeLatitude'
+# TODO: Remove Tweets for which geolocation does not correspond to Switzerland
+def clean_tweets(sample_tweets):
+    sample_tweets_cleaned = sample_tweets[sample_tweets['createdAt'].notnull() &sample_tweets['text'].notnull() & (((sample_tweets['longitude'].notnull() &sample_tweets['latitude'].notnull())) |((sample_tweets['placeLongitude'].notnull()&sample_tweets['placeLatitude'].notnull())))]
+    return sample_tweets_cleaned
