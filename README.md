@@ -8,6 +8,8 @@ https://github.com/gokcennurlu/ADA-project-static
 The snippet that is used to map coordinates to cantons can be found in the repository below:
 https://github.com/gokcennurlu/canton_mapping_tests
 
+Here a link to our poster which has a good summary of rationale, methodology used and interesting patterns we observed in the results section: https://docs.google.com/presentation/d/1qJdt5fXH88yHrUDIddz8XakjWf7bQVdEefnFGkofK_U/edit?usp=sharing 
+
 ### Abstract
 The goal of the project is to build a platform for capturing sentiments and emotions expressed using twitter in swiss cantons. The platform uses Twitter as a data source and combines sentiment analysis, Hybrid Fine-Grained Emotion Analysis Methodologies, and visualization techniques in order to provide users with an interactive interface for data exploration.
 
