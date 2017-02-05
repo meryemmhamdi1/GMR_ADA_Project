@@ -48,8 +48,18 @@ One of the limitations that we are currently thinking of is the possibility that
 ### Used Libraries
 
 [Stanford Dependency Parser](http://nlp.stanford.edu/software/lex-parser.shtml)  
+
 [spaCy NLP Tools](https://spacy.io/)    
+
 [gensim word2vec](https://radimrehurek.com/gensim/models/word2vec.html)  
+
+[NLTK](http://www.nltk.org/)
+
+[langdetect](https://pypi.python.org/pypi/langdetect)
+
+[shapely](https://pypi.python.org/pypi/Shapely)
+
+[TextBlob](https://textblob.readthedocs.io/en/dev/)
 
 
 ### Other Resources:
